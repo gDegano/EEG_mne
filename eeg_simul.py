@@ -81,7 +81,8 @@ epochs.plot()
 prestim=epochs.crop(tmin=-0.4, tmax=0)
 prestim_avg=prestim.average
 
-from statsmodels.tsa.arima_model import ARIMA
+# Now we have a Data_frame.... fun begins
+df=prestim_avg.to_data_frame()
 
 
 
