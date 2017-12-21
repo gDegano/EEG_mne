@@ -78,7 +78,8 @@ epochs = Epochs(raw_sim, events, 1, -0.4, epoch_duration,preload=True)
 epochs.plot()
 
 # Prestim extraction 
-prestim=epochs.crop(tmin=-0.4, tmax=0)
+prestim=epochs
+prestim.crop(tmin=-0.4, tmax=0)
 prestim_avg=prestim.average()
 
 # Now we have a Data_frame.... fun begins
@@ -89,20 +90,22 @@ from statsmodels.tsa.arima_model import ARMA
 from statsmodels.tsa.arima_model import ARMAResults
 from pandas import DataFrame
 
+# number of prediction steps
+n_steps=20;
+
 # Extract channel 1
 chan_1=df.values[:,1]
 size = int(len(chan_1) * 0.8)
 train, test = chan_1[0:size], chan_1[size:len(chan_1)]
 
-
 # Model orders taken from lit...
-model = ARMA(train, order=(15,5))
+model = ARMA(train, order=(18,6))
 model_fit = model.fit(disp=0)
 
-fore_chan=model_fit.forecast(steps=10)[0]
+fore_chan=model_fit.forecast(steps=n_steps)[0]
 
 plt.plot(fore_chan)
-plt.plot(test[0:10], color='red')
+plt.plot(test[0:n_steps], color='red')
 plt.show()
 
 
