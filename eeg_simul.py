@@ -21,7 +21,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import mne
-from mne import read_source_spaces, find_events, Epochs, compute_covariance
+from mne import read_source_spaces, find_events, Epochs
 from mne.datasets import sample
 from mne.simulation import simulate_sparse_stc, simulate_raw
 
@@ -92,7 +92,7 @@ from statsmodels.tsa.arima_model import ARMA
 from pandas import DataFrame
 
 # number of prediction steps
-n_steps=50;
+n_steps=40;
 
 # Extract channel 1
 chan_1=df.values[:,1]
@@ -100,7 +100,7 @@ size = int(len(chan_1) * 0.8)
 train, test = chan_1[0:size], chan_1[size:len(chan_1)]
 
 # Model orders taken from lit...
-model = ARMA(train, order=(22,6))
+model = ARMA(train, order=(20,4))
 model_fit = model.fit(disp=0)
 
 # Plotting of the residuals of the model
